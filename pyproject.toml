@@ -1,0 +1,51 @@
+[project]
+name = "visibon"
+version = "0.1.0"
+description = "VisiBon — scan struk belanja Indonesia jadi catatan pengeluaran otomatis + split bill, pakai Computer Vision & VLM."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "opencv-python-headless>=4.10",
+    "numpy>=1.26",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "httpx>=0.27",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "python-multipart>=0.0.9",
+    "rich>=13.7",
+    "python-telegram-bot>=21.0",
+    "sqlalchemy>=2.0",
+    "aiosqlite>=0.20",
+    "greenlet>=3.0",
+]
+
+[project.optional-dependencies]
+gemini = ["google-genai>=2.25.0"]
+
+[project.scripts]
+visibon = "visibon.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/visibon"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
